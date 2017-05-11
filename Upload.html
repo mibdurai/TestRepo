@@ -56,7 +56,7 @@
                     //draw photo into canvas when ready
                     ctxPre.drawImage(photoPreview, 0, 0, 500, 400);
                 };
-                photoPreview.src = picURL;
+                photoPreview.src = windowURL.createObjectURL(fileInput[0]);
                 document.getElementById("preview").appendChild(photoPreview);
                 windowURL.revokeObjectURL(picURL);
             }
