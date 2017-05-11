@@ -44,15 +44,16 @@
                     ctx.drawImage(photo, 0, 0, 500, 400);
                 };
                 photo.src = picURL;
-              
+
                 fileList.push(new Blob(fileInput));
                 var photoPreview = new Image();
                 photoPreview.width = 100;
                 photoPreview.height = 100;
-                photoPreview.onload = function () {
-                    //draw photo into canvas when ready
-                    ctx.drawImage(photoPreview, 0, 0, 500, 400);
-                };
+                ctx.drawImage(photoPreview, 0, 0, 500, 400);
+                //photoPreview.onload = function () {
+                //    //draw photo into canvas when ready
+                //    ctx.drawImage(photoPreview, 0, 0, 500, 400);
+                //};
                 photoPreview.src = picURL;
                 document.getElementById("preview").appendChild(photoPreview);
                 windowURL.revokeObjectURL(picURL);
@@ -64,20 +65,21 @@
             for (var count = 0; count < fileList.length; count++) {
                 var windowURL = window.URL || window.webkitURL;
                 var picURL = windowURL.createObjectURL(fileList[count]);
-                var canvas = document.getElementById("captured"+count);
-               
+                var canvas = document.createElement("canvas");// document.getElementById("captured" + count);
+
                 var ctx = canvas.getContext("2d");
                 //create image
                 var photo = new Image();
                 photo.width = 100;
                 photo.height = 100;
-                photo.onload = function () {
-                    //draw photo into canvas when ready
-                    ctx.drawImage(photo, 0, 0, 500, 400);
-                };
-                photo.src = picURL;
-                windowURL.revokeObjectURL(picURL);
+                ctx.drawImage(photo, 0, 0, 500, 400);
+                //photo.onload = function () {
+                //    //draw photo into canvas when ready
+                //    ctx.drawImage(photo, 0, 0, 500, 400);
+                //};
+                photo.src = picURL;               
                 document.getElementById("preview").appendChild(photo);
+                windowURL.revokeObjectURL(picURL);
             }
         }
     </script>
@@ -94,8 +96,7 @@
         <canvas id="capturedPhoto" width="500" height="400"></canvas>
         <input type="button" id="btnPreview" onclick="ShowAllUpload()" value="Preview" />
         <div id="preview">
-             <canvas id="captured1" width="100" height="100"></canvas>
-            <canvas id="captured2" width="100" height="100"></canvas>
+          
         </div>
     </div>
 </body>
