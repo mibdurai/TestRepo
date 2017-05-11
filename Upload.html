@@ -32,6 +32,13 @@
             if (fileInput.length > 0) {
                 //window url
                 var windowURL = window.URL || window.webkitURL;
+
+                var img = document.createElement("img")
+                img.height = 100;
+                img.width = 100;
+                img.src = windowURL.createObjectURL(fileInput[0]);
+                document.getElementById("preview").appendChild(img);
+
                 //picture url
                 var picURL = windowURL.createObjectURL(fileInput[0]);
                 //get canvas
@@ -63,7 +70,7 @@
                 img.width = 100;
                 img.src = windowURL.createObjectURL(fileInput[0]);
                 document.getElementById("preview").appendChild(img);
-                windowURL.revokeObjectURL(picURL);
+               // windowURL.revokeObjectURL(picURL);
             }
         }
 
