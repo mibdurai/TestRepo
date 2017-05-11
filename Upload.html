@@ -52,25 +52,9 @@
                 };
                 photo.src = picURL;
 
-                //var photoCanvasPre = document.getElementById("capturedPhotoPreview");
-                //var ctxPre = photoCanvasPre.getContext("2d");
-                fileList.push(new Blob(fileInput));
-               // var photoPreview = new Image();
-               // photoPreview.width = 100;
-               // photoPreview.height = 100;
-               //// ctxPre.drawImage(photoPreview, 0, 0, 500, 400);
-               // photoPreview.onload = function () {
-               //     //draw photo into canvas when ready
-               //     ctxPre.drawImage(photoPreview, 0, 0, 500, 400);
-               // };
-               // photoPreview.src = windowURL.createObjectURL(fileInput[0]);
-                // document.getElementById("preview").appendChild(photoPreview);
-                var img = document.createElement("img")
-                img.height = 100;
-                img.width = 100;
-                img.src = windowURL.createObjectURL(fileInput[0]);
-                document.getElementById("preview").appendChild(img);
-               // windowURL.revokeObjectURL(picURL);
+                fileList.push(new Blob(fileInput));              
+              
+               windowURL.revokeObjectURL(picURL);
             }
         }
 
