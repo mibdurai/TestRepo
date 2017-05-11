@@ -1,46 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style type="text/css">
-    body, html {font-family:sans-serif; background-color:#000000;}
-    div {width:80%; margin:auto; background-color:#ffffff; padding:5%; border:2px solid #990066; text-align:center; border-radius:10px;}
-    canvas {padding:5%; border:2px solid #330000; background-color:#660000; border-radius:10px;}
-  </style>
-  <script type="text/javascript">
-    function picChange(evt){
-//get files captured through input
-      var fileInput = evt.target.files;
-      if(fileInput.length>0){
-//window url
-        var windowURL = window.URL || window.webkitURL;
-        //picture url
-        var picURL = windowURL.createObjectURL(fileInput[0]);
-        //get canvas
-        var photoCanvas = document.getElementById("capturedPhoto");
-        var ctx = photoCanvas.getContext("2d");
-        //create image
-        var photo = new Image();
-        photo.onload = function(){
-          //draw photo into canvas when ready
-          ctx.drawImage(photo, 0, 0, 500, 400);
-        };
-        photo.src = picURL;
-        windowURL.revokeObjectURL(picURL);
-      }
-    }
-  </script>
+    <style type="text/css">
+        body, html {
+            font-family: sans-serif;
+            background-color: #000000;
+        }
+
+        div {
+            width: 80%;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 5%;
+            border: 2px solid #990066;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        canvas {
+            padding: 5%;
+            border: 2px solid #330000;
+            background-color: #660000;
+            border-radius: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        var fileList = [];
+        function picChange(evt) {
+            //get files captured through input
+            var fileInput = evt.target.files;
+            if (fileInput.length > 0) {
+                //window url
+                var windowURL = window.URL || window.webkitURL;
+                //picture url
+                var picURL = windowURL.createObjectURL(fileInput[0]);
+                //get canvas
+                var photoCanvas = document.getElementById("capturedPhoto");
+                var ctx = photoCanvas.getContext("2d");
+                //create image
+                var photo = new Image();
+                photo.onload = function () {
+                    //draw photo into canvas when ready
+                    ctx.drawImage(photo, 0, 0, 500, 400);
+                };
+                photo.src = picURL;
+              
+                fileList.push(new Blob(fileInput));
+                var photoPreview = new Image();
+                photoPreview.width = 100;
+                photoPreview.height = 100;
+                photoPreview.onload = function () {
+                    //draw photo into canvas when ready
+                    ctx.drawImage(photoPreview, 0, 0, 500, 400);
+                };
+                photoPreview.src = picURL;
+                document.getElementById("preview").appendChild(photoPreview);
+                windowURL.revokeObjectURL(picURL);
+            }
+        }
+
+        function ShowAllUpload() {
+
+            for (var count = 0; count < fileList.length; count++) {
+                var windowURL = window.URL || window.webkitURL;
+                var picURL = windowURL.createObjectURL(fileList[count]);
+                var canvas = document.createElement("canvas");
+               
+                var ctx = canvas.getContext("2d");
+                //create image
+                var photo = new Image();
+                photo.width = 100;
+                photo.height = 100;
+                photo.onload = function () {
+                    //draw photo into canvas when ready
+                    ctx.drawImage(photo, 0, 0, 500, 400);
+                };
+                photo.src = picURL;
+                windowURL.revokeObjectURL(picURL);
+                document.getElementById("preview").appendChild(photo);
+            }
+        }
+    </script>
 </head>
 <body>
-<div>
-  <p>
-    Choose a picture from your device or capture one with your camera now:
-  </p>
-  <input type="file" accept="image/*" onchange="picChange(event)"/>
-  <p>
-    Photo:
-  </p>
-  <canvas id="capturedPhoto" width="500" height="400">
-  </canvas>
-</div>
+    <div>
+        <p>
+            Choose a picture from your device or capture one with your camera now:
+        </p>
+        <input type="file" accept="image/*" onchange="picChange(event)" />
+        <p>
+            Photo:
+        </p>
+        <canvas id="capturedPhoto" width="500" height="400"></canvas>
+        <input type="button" id="btnPreview" onclick="ShowAllUpload()" value="Preview" />
+        <div id="preview">
+        </div>
+    </div>
 </body>
 </html>
