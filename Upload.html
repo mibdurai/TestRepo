@@ -45,15 +45,17 @@
                 };
                 photo.src = picURL;
 
+                var photoCanvasPre = document.getElementById("capturedPhotoPreview");
+                var ctxPre = photoCanvasPre.getContext("2d");
                 fileList.push(new Blob(fileInput));
                 var photoPreview = new Image();
                 photoPreview.width = 100;
                 photoPreview.height = 100;
-                ctx.drawImage(photoPreview, 0, 0, 500, 400);
-                //photoPreview.onload = function () {
-                //    //draw photo into canvas when ready
-                //    ctx.drawImage(photoPreview, 0, 0, 500, 400);
-                //};
+               // ctxPre.drawImage(photoPreview, 0, 0, 500, 400);
+                photoPreview.onload = function () {
+                    //draw photo into canvas when ready
+                    ctxPre.drawImage(photoPreview, 0, 0, 500, 400);
+                };
                 photoPreview.src = picURL;
                 document.getElementById("preview").appendChild(photoPreview);
                 windowURL.revokeObjectURL(picURL);
@@ -94,6 +96,7 @@
             Photo:
         </p>
         <canvas id="capturedPhoto" width="500" height="400"></canvas>
+        <canvas id="capturedPhotoPreview" width="500" height="400"></canvas>
         <input type="button" id="btnPreview" onclick="ShowAllUpload()" value="Preview" />
         <div id="preview">
           
